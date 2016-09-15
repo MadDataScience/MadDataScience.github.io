@@ -12055,7 +12055,7 @@ Q: What's wrong with denormalization?</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="p">{</span><span class="s1">u&#39;contributors&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
@@ -12325,20 +12325,34 @@ instead of using column positions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">fs</span> put --overwrite=true sales.csv &quot;&quot;&quot;#ID,Date,Store,State,Product,Amount
-<span class="mi">101</span><span class="p">,</span><span class="mi">11</span><span class="o">/</span><span class="mi">13</span><span class="o">/</span><span class="mi">2014</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">WA</span><span class="p">,</span><span class="mi">331</span><span class="p">,</span><span class="mf">300.00</span>
-<span class="mi">104</span><span class="p">,</span><span class="mi">11</span><span class="o">/</span><span class="mi">18</span><span class="o">/</span><span class="mi">2014</span><span class="p">,</span><span class="mi">700</span><span class="p">,</span><span class="n">OR</span><span class="p">,</span><span class="mi">329</span><span class="p">,</span><span class="mf">450.00</span>
-<span class="mi">102</span><span class="p">,</span><span class="mi">11</span><span class="o">/</span><span class="mi">15</span><span class="o">/</span><span class="mi">2014</span><span class="p">,</span><span class="mi">203</span><span class="p">,</span><span class="n">CA</span><span class="p">,</span><span class="mi">321</span><span class="p">,</span><span class="mf">200.00</span>
-<span class="mi">106</span><span class="p">,</span><span class="mi">11</span><span class="o">/</span><span class="mi">19</span><span class="o">/</span><span class="mi">2014</span><span class="p">,</span><span class="mi">202</span><span class="p">,</span><span class="n">CA</span><span class="p">,</span><span class="mi">331</span><span class="p">,</span><span class="mf">330.00</span>
-<span class="mi">103</span><span class="p">,</span><span class="mi">11</span><span class="o">/</span><span class="mi">17</span><span class="o">/</span><span class="mi">2014</span><span class="p">,</span><span class="mi">101</span><span class="p">,</span><span class="n">WA</span><span class="p">,</span><span class="mi">373</span><span class="p">,</span><span class="mf">750.00</span>
-<span class="mi">105</span><span class="p">,</span><span class="mi">11</span><span class="o">/</span><span class="mi">19</span><span class="o">/</span><span class="mi">2014</span><span class="p">,</span><span class="mi">202</span><span class="p">,</span><span class="n">CA</span><span class="p">,</span><span class="mi">321</span><span class="p">,</span><span class="mf">200.00</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%%</span><span class="k">writefile</span> sales.csv
+#ID,Date,Store,State,Product,Amount
+101,11/13/2014,100,WA,331,300.00
+104,11/18/2014,700,OR,329,450.00
+102,11/15/2014,203,CA,321,200.00
+106,11/19/2014,202,CA,331,330.00
+103,11/17/2014,101,WA,373,750.00
+105,11/19/2014,202,CA,321,200.00
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Overwriting sales.csv
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12357,7 +12371,22 @@ instead of using column positions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">pyspark</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">pyspark</span><span class="o">.</span><span class="n">SparkContext</span><span class="p">()</span>
+<span class="n">sqlContext</span> <span class="o">=</span> <span class="n">pyspark</span><span class="o">.</span><span class="n">SQLContext</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s1">&#39;sales.csv&#39;</span><span class="p">)</span>\
@@ -12370,6 +12399,27 @@ instead of using column positions.</p>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(101, u&#39;11/13/2014&#39;, 100, u&#39;WA&#39;, 331, 300.0),
+ (104, u&#39;11/18/2014&#39;, 700, u&#39;OR&#39;, 329, 450.0),
+ (102, u&#39;11/15/2014&#39;, 203, u&#39;CA&#39;, 321, 200.0),
+ (106, u&#39;11/19/2014&#39;, 202, u&#39;CA&#39;, 331, 330.0),
+ (103, u&#39;11/17/2014&#39;, 101, u&#39;WA&#39;, 373, 750.0),
+ (105, u&#39;11/19/2014&#39;, 202, u&#39;CA&#39;, 321, 200.0)]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -12388,7 +12438,7 @@ instead of using column positions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="o">*</span>
@@ -12413,7 +12463,7 @@ instead of using column positions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">(</span> <span class="p">[</span>
@@ -12444,7 +12494,7 @@ instead of using column positions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">rdd</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
@@ -12452,6 +12502,30 @@ instead of using column positions.</p>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+---+----------+-----+-----+-------+------+
+| id|      date|store|state|product|amount|
++---+----------+-----+-----+-------+------+
+|101|11/13/2014|  100|   WA|    331| 300.0|
+|104|11/18/2014|  700|   OR|    329| 450.0|
+|102|11/15/2014|  203|   CA|    321| 200.0|
+|106|11/19/2014|  202|   CA|    331| 330.0|
+|103|11/17/2014|  101|   WA|    373| 750.0|
+|105|11/19/2014|  202|   CA|    321| 200.0|
++---+----------+-----+-----+-------+------+
+
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12480,7 +12554,7 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">registerTempTable</span><span class="p">(</span><span class="s1">&#39;sales&#39;</span><span class="p">)</span>
@@ -12505,13 +12579,37 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">sql</span> SELECT state, amount FROM sales WHERE amount &gt; 100
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;SELECT state,amount from sales where amount &gt; 100&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+-----+------+
+|state|amount|
++-----+------+
+|   WA| 300.0|
+|   OR| 450.0|
+|   CA| 200.0|
+|   CA| 330.0|
+|   WA| 750.0|
+|   CA| 200.0|
++-----+------+
+
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12617,7 +12715,7 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">Row</span>
@@ -12637,13 +12735,52 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">dataFrame</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">dataFrame</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>+---+---+
+|bit|num|
++---+---+
+|  0|  0|
+|  1|  1|
+|  0|  2|
+|  1|  3|
+|  0|  4|
+|  1|  5|
+|  0|  6|
+|  1|  7|
+|  0|  8|
+|  1|  9|
+|  0| 10|
+|  1| 11|
+|  0| 12|
+|  1| 13|
+|  0| 14|
+|  1| 15|
+|  0| 16|
+|  1| 17|
+|  0| 18|
+|  1| 19|
++---+---+
+only showing top 20 rows
+
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12659,7 +12796,7 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">Row</span>
@@ -12688,13 +12825,41 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">sql</span> EXPLAIN SELECT * FROM my_large_table JOIN my_small_temp_table ON my_large_table.bit = my_small_temp_table.bit
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;EXPLAIN SELECT * </span>
+<span class="s1">    FROM my_large_table </span>
+<span class="s1">    JOIN my_small_temp_table </span>
+<span class="s1">    ON my_large_table.bit = my_small_temp_table.bit&#39;&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;plan&#39;</span><span class="p">])</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>== Physical Plan ==
+*SortMergeJoin [bit#29L], [bit#40L], Inner
+:- *Sort [bit#29L ASC], false, 0
+:  +- Exchange hashpartitioning(bit#29L, 200)
+:     +- Exchange RoundRobinPartitioning(100)
+:        +- *Filter isnotnull(bit#29L)
+:           +- Scan ExistingRDD[bit#29L,num#30L]
++- *Sort [bit#40L ASC], false, 0
+   +- Exchange hashpartitioning(bit#40L, 200)
+      +- *Filter isnotnull(bit#40L)
+         +- Scan ExistingRDD[bit#40L]
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12714,7 +12879,7 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="k">def</span> <span class="nf">output_index_and_count</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">iter</span><span class="p">):</span>
@@ -12728,6 +12893,22 @@ Replace `line.split(',')` with `line.split('\t')`
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(5, 500000), (69, 500000)]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -12758,20 +12939,36 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">sql</span> DROP TABLE IF EXISTS my_small_table
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;DROP TABLE IF EXISTS my_small_table&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>DataFrame[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">Row</span>
@@ -12800,13 +12997,39 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">sql</span> EXPLAIN SELECT * FROM my_large_table JOIN my_small_table ON my_large_table.bit = my_small_table.bit
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;EXPLAIN SELECT * </span>
+<span class="s1">    FROM my_large_table </span>
+<span class="s1">    JOIN my_small_table </span>
+<span class="s1">    ON my_large_table.bit = my_small_table.bit&#39;&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;plan&#39;</span><span class="p">])</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>== Physical Plan ==
+*BroadcastHashJoin [bit#29L], [bit#64L], Inner, BuildRight
+:- Exchange RoundRobinPartitioning(100)
+:  +- *Filter isnotnull(bit#29L)
+:     +- Scan ExistingRDD[bit#29L,num#30L]
++- BroadcastExchange HashedRelationBroadcastMode(List(input[0, bigint, true]))
+   +- *Project [bit#64L]
+      +- *Filter isnotnull(bit#64L)
+         +- *BatchedScan parquet default.my_small_table[bit#64L] Format: ParquetFormat, InputPaths: file:/Users/alessandro/Dropbox/MadDataScience.github.io/spark-warehouse/my_small_table, PushedFilters: [IsNotNull(bit)], ReadSchema: struct&lt;bit:bigint&gt;
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12827,12 +13050,11 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">sql</span> 
-<span class="o">---</span> <span class="n">Uncomment</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="ow">and</span> <span class="n">run</span> <span class="n">it</span> <span class="k">if</span> <span class="n">you</span> <span class="n">did</span> <span class="ow">not</span> <span class="n">see</span> <span class="n">a</span> <span class="n">BroadcastHashJoin</span><span class="o">.</span>
-<span class="o">---</span> <span class="n">ANALYZE</span> <span class="n">TABLE</span> <span class="n">my_small_table</span> <span class="n">COMPUTE</span> <span class="n">STATISTICS</span> <span class="n">noscan</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Uncomment the following command and run it if you did not see a BroadcastHashJoin.</span>
+<span class="c1"># sqlContext.sql(&#39;ANALYZE TABLE my_small_table COMPUTE STATISTICS noscan&#39;).collect()</span>
 </pre></div>
 
 </div>
@@ -12852,11 +13074,13 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">broadcastHashJoinRdd</span> <span class="o">=</span>\
-  <span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select * from my_large_table join my_small_table on my_large_table.bit = my_small_table.bit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">broadcastHashJoinRdd</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * </span>
+<span class="s2">    FROM my_large_table </span>
+<span class="s2">    JOIN my_small_table </span>
+<span class="s2">    ON my_large_table.bit = my_small_table.bit&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rdd</span>
 </pre></div>
 
 </div>
@@ -12866,13 +13090,128 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">broadcastHashJoinRdd</span><span class="o">.</span><span class="n">mapPartitionsWithIndex</span><span class="p">(</span><span class="n">output_index_and_count</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(0, 10000),
+ (1, 10000),
+ (2, 10000),
+ (3, 10000),
+ (4, 10000),
+ (5, 10000),
+ (6, 10000),
+ (7, 10000),
+ (8, 10000),
+ (9, 10001),
+ (10, 10001),
+ (11, 10001),
+ (12, 10001),
+ (13, 10001),
+ (14, 10001),
+ (15, 10001),
+ (16, 10001),
+ (17, 10000),
+ (18, 10000),
+ (19, 10000),
+ (20, 10000),
+ (21, 10000),
+ (22, 10000),
+ (23, 10000),
+ (24, 10000),
+ (25, 10000),
+ (26, 10000),
+ (27, 10000),
+ (28, 10000),
+ (29, 10000),
+ (30, 10000),
+ (31, 10000),
+ (32, 10000),
+ (33, 10000),
+ (34, 10000),
+ (35, 10001),
+ (36, 10001),
+ (37, 10001),
+ (38, 10001),
+ (39, 10001),
+ (40, 10001),
+ (41, 10001),
+ (42, 10000),
+ (43, 10000),
+ (44, 10000),
+ (45, 10000),
+ (46, 10000),
+ (47, 10000),
+ (48, 10000),
+ (49, 10000),
+ (50, 10000),
+ (51, 10000),
+ (52, 10000),
+ (53, 10000),
+ (54, 10000),
+ (55, 10000),
+ (56, 10000),
+ (57, 10000),
+ (58, 10000),
+ (59, 10000),
+ (60, 10000),
+ (61, 10001),
+ (62, 10001),
+ (63, 10001),
+ (64, 10001),
+ (65, 10000),
+ (66, 10000),
+ (67, 9999),
+ (68, 9999),
+ (69, 9999),
+ (70, 9999),
+ (71, 9999),
+ (72, 9999),
+ (73, 9999),
+ (74, 9999),
+ (75, 9999),
+ (76, 9999),
+ (77, 9999),
+ (78, 9999),
+ (79, 9999),
+ (80, 9999),
+ (81, 9999),
+ (82, 9999),
+ (83, 9999),
+ (84, 9999),
+ (85, 9999),
+ (86, 10000),
+ (87, 10000),
+ (88, 10000),
+ (89, 10000),
+ (90, 10000),
+ (91, 10000),
+ (92, 10000),
+ (93, 10000),
+ (94, 10000),
+ (95, 10000),
+ (96, 10000),
+ (97, 10000),
+ (98, 10000),
+ (99, 10000)]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -12889,13 +13228,29 @@ Replace `line.split(',')` with `line.split('\t')`
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="o">%</span><span class="k">sql</span> DROP TABLE IF EXISTS my_small_table
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;DROP TABLE IF EXISTS my_small_table&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>DataFrame[]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
