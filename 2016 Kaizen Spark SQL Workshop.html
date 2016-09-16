@@ -11795,8 +11795,7 @@ Twitter: <a href="https://twitter.com/MadDataScience"><code>@MadDataScience</cod
 <h3 id="By-the-end-of-this-workshop,-you-should-be-able-to:">By the end of this workshop, you should be able to:<a class="anchor-link" href="#By-the-end-of-this-workshop,-you-should-be-able-to:">&#182;</a></h3><ol>
 <li>Place SQL in its historical context with regard to databases and distributed architectures</li>
 <li>Explain the difference between NoSQL and NOSQL</li>
-<li>Identify which JOIN method to use according to the data involved</li>
-<li>Use Spark to join Cassandra tables</li>
+<li>Identify which JOIN method to use on distributed data</li>
 </ol>
 
 </div>
@@ -12315,7 +12314,8 @@ instead of using column positions.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Spark-SQL-Using-CSV">Spark SQL Using CSV<a class="anchor-link" href="#Spark-SQL-Using-CSV">&#182;</a></h2><p>How can I pull in my CSV data and use Spark SQL on it?</p>
+<h2 id="Spark-SQL-Using-CSV">Spark SQL Using CSV<a class="anchor-link" href="#Spark-SQL-Using-CSV">&#182;</a></h2><p>To proceed with the demo, please go to <a href="https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/6780843632664124/3482466428365889/2932358616588278/latest.html">http://tinyurl.com/sparksql16</a> and import the notebook into your own <a href="https://community.cloud.databricks.com">Databricks</a> cloud.</p>
+<p>How can I pull in my CSV data and use Spark SQL on it?</p>
 <ul>
 <li>Make sure the CSV exists.</li>
 </ul>
@@ -12790,7 +12790,7 @@ only showing top 20 rows
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="By-default,-Spark-uses-ShuffledHashJoin-to-join-this-table-with-a-small-table.">By default, Spark uses ShuffledHashJoin to join this table with a small table.<a class="anchor-link" href="#By-default,-Spark-uses-ShuffledHashJoin-to-join-this-table-with-a-small-table.">&#182;</a></h3>
+<h3 id="By-default,-Spark-will-not-use-BroadcastHashJoin-to-join-this-table-with-a-small-table.">By default, Spark will not use BroadcastHashJoin to join this table with a small table.<a class="anchor-link" href="#By-default,-Spark-will-not-use-BroadcastHashJoin-to-join-this-table-with-a-small-table.">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -12888,8 +12888,12 @@ only showing top 20 rows
     <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
   <span class="k">yield</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
 
-<span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM my_large_table JOIN my_small_temp_table ON my_large_table.bit = my_small_temp_table.bit&quot;</span><span class="p">)</span>\
-  <span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">mapPartitionsWithIndex</span><span class="p">(</span><span class="n">output_index_and_count</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+<span class="n">sqlContext</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * </span>
+<span class="s2">    FROM my_large_table </span>
+<span class="s2">    JOIN my_small_temp_table </span>
+<span class="s2">    ON my_large_table.bit = my_small_temp_table.bit&quot;&quot;&quot;</span><span class="p">)</span>\
+  <span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">mapPartitionsWithIndex</span><span class="p">(</span><span class="n">output_index_and_count</span><span class="p">)</span>\
+      <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 </pre></div>
 
 </div>
